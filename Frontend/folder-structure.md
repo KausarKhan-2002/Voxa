@@ -32,7 +32,6 @@
 ---
 
 ### **🚀 Next Steps**
-- 🔹 Integrate **authentication API (JWT, Firebase, etc.)**.
 - 🔹 Implement **real-time chat with WebSockets (Socket.io)**.
 
 ---
