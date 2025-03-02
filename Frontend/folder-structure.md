@@ -1,3 +1,51 @@
+
+---
+
+## 📌 Left Panel (`LeftPanel`)
+- `LeftLayout.jsx` → Manages the entire left section.
+- `ChatList.jsx` → Renders a list of available chats.
+- `ChatListItem.jsx` → Represents an individual chat.
+- `SearchBar.jsx` → Search functionality.
+- `ChatFilter.jsx` → Filter chats (All, Unread, More).
+
+---
+
+## 📌 Right Panel (`RightPanel`)
+- `RightLayout.jsx` → Manages the entire right section.
+- `ChatHeader.jsx` → Shows the chat header (name, options).
+- `MessageList.jsx` → Displays all messages in a chat.
+- `MessageItem.jsx` → A single message (sent or received).
+- `MessageInput.jsx` → Input field for typing messages.
+
+---
+
+## 📌 Authentication (`Auth`)
+- `AuthForm.jsx` → Single component for **both** Signup & Login.
+
+---
+
+## ✅ **Why This Structure?**
+✔ **Modular & Readable** → Separated into **LeftPanel, RightPanel, and Auth**.  
+✔ **Scalable** → Easy to add more features without breaking the structure.  
+✔ **Maintainable** → Clear separation of concerns for UI components.  
+
+---
+
+### **🚀 Next Steps**
+- 🔹 Integrate **authentication API (JWT, Firebase, etc.)**.
+- 🔹 Implement **real-time chat with WebSockets (Socket.io)**.
+
+---
+
+Now, push this to GitHub! 🎉  
+```sh
+cd Frontend
+git add folder-structure.md
+git commit -m "Updated frontend structure with LeftPanel, RightPanel, and Auth"
+git push origin main
+
+
+
 /Frontend
 │── /src
 │   ├── /components
