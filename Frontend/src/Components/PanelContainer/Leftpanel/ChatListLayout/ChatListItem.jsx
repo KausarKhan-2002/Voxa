@@ -1,13 +1,22 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getUserAccess } from "../../../../Store/userAccessSlice";
 
 const ChatListItem = ({ users }) => {
   const [active, setActive] = useState("");
+  const dispatch = useDispatch();
+
+  function handleChatUser(user) {
+    setActive(user.id);
+
+    dispatch(getUserAccess(user));
+  }
 
   return (
     <section className="">
       {users.map((user) => (
         <div
-          onClick={() => setActive(user.id)}
+          onClick={() => handleChatUser(user)}
           key={user.id}
           className={`${
             active == user.id && "bg-slate-900"
