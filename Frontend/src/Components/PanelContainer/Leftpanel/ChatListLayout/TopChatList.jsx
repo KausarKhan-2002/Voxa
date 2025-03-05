@@ -1,10 +1,12 @@
-import React from "react";
+import { memo } from "react";
 import { FiFolderPlus } from "react-icons/fi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 
 const TopChatList = () => {
+  // console.log("TopChatList");
+  
   return (
-    <div className="flex justify-between items-center px-4 py-5">
+    <div className="flex justify-between items-center px-4 pt-5">
       <h2 className="text-2xl font-semibold">Chats</h2>
 
       <div className="flex items-center gap-5">
@@ -25,4 +27,4 @@ const TopChatList = () => {
   );
 };
 
-export default TopChatList;
+export default memo(TopChatList);

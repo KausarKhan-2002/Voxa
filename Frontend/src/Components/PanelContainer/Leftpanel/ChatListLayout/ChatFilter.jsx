@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 
 const filters = [
   { id: "A", label: "All" },
@@ -16,7 +16,7 @@ const ChatFilter = () => {
   }
 
   return (
-    <div className="flex gap-3 text-sm mx-3 mt-2">
+    <div className="flex gap-3 text-sm mx-3 mt-2 pb-3">
       {filters.map(({ id, label }) => {
         const isActiveClass =
           isActive === id
@@ -37,4 +37,4 @@ const ChatFilter = () => {
   );
 };
 
-export default ChatFilter;
+export default memo(ChatFilter);
