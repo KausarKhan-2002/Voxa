@@ -1,9 +1,27 @@
-const express = require("express")
-const { signup, login, logout } = require("../controllers/userController")
-const route = express.Router()
+const express = require("express");
+const {
+  signup,
+  login,
+  logout,
+  updateProfilePicture,
+  updateUserInformation,
+} = require("../controllers/userController");
+const isAuthorized = require("../middlewares/isAuthorized");
+const route = express.Router();
+const multer = require("multer");
 
-route.post("/signup", signup)
-route.post("/login", login)
-route.post("/logout", logout)
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
-module.exports = route
+route.post("/signup", signup);
+route.post("/login", login);
+route.post("/logout", isAuthorized, logout);
+route.patch(
+  "/update-profile",
+  isAuthorized,
+  upload.single("profileImage"),
+  updateProfilePicture
+);
+route.patch("/update-user", isAuthorized, updateUserInformation);
+
+module.exports = route;

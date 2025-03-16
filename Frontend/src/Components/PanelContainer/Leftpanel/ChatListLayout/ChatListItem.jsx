@@ -13,14 +13,14 @@ const ChatListItem = ({ users }) => {
   }
 
   return (
-    <section className="">
+    <section className="relative">
       {users.map((user) => (
         <div
           onClick={() => handleChatUser(user)}
           key={user.id}
           className={`${
             active == user.id && "bg-slate-900"
-          } flex justify-between items-center gap-3 px-3 cursor-pointer border-t-[1px] py-3 border-slate-700 hover:bg-slate-900`}
+          } relative flex justify-between items-center gap-3 px-3 cursor-pointer border-t-[1px] py-3 border-slate-700 hover:bg-slate-900`}
         >
           <div>
             <img
@@ -37,6 +37,13 @@ const ChatListItem = ({ users }) => {
             </div>
             <p className="text-slate-400 text-xs">{user.lastTime}</p>
           </div>
+
+          {/* Message notification */}
+          {user.newMessage && (
+            <p className="absolute right-3 top-9 flex justify-center items-center text-xs font-bold bg-green-500 rounded-full min-w-6 h-6">
+              {Math.floor(Math.random() * 20)}
+            </p>
+          )}
         </div>
       ))}
     </section>

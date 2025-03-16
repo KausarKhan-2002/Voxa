@@ -5,8 +5,8 @@ import RightLayout from "./RightPanel/RightLayout";
 const PanelContainer = () => {
   return (
     <div className="flex h-[94vh] shadow-2xl">
-      <LeftLayout />
-      <RightLayout />
+     <LeftLayout />
+     <RightLayout />
     </div>
   );
 };

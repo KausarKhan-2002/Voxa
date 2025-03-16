@@ -1,22 +1,29 @@
 // This line imports Mongoose, which is an Object Data Modeling (ODM) library for MongoDB.
-// It allows us to define schemas, interact with MongoDB, and perform operations like 
+// It allows us to define schemas, interact with MongoDB, and perform operations like
 // creating, reading, updating, and deleting data.
 
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true, lowercase: true },
-    password: { type: String, required: true },
+    name: { type: String, required: true, trim: true },
+    email: { type: String, required: true, lowercase: true, trim: true },
+    password: { type: String, required: true, trim: true },
+    phoneNumber: { type: Number, require: true, trim: true, maxLength: 12 },
+    description: {
+      type: String,
+      trim: true,
+      default: "Hii there, I am using Chatify",
+    },
+    profilePicture: { type: String, trim: true, default: "" },
   },
   {
     // mongoose schema offers timestamps to track when user create and update their data.
-    timestamps: true
+    timestamps: true,
   }
 );
 
-const User = mongoose.model("user", userSchema)
+const User = mongoose.model("user", userSchema);
 module.exports = User;
 
 // Mongoose support the following data types:
