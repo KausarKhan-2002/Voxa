@@ -4,7 +4,7 @@ Chatify is a **real-time chat application** built with the **MERN stack**, desig
 
 ---
 
-## 🏗️ Tech Stack
+## 🏷️ Tech Stack
 
 ### Backend
 Chatify's backend is powered by **Node.js, Express, and MongoDB**, with additional support for authentication, file uploads, and real-time communication.
@@ -12,7 +12,7 @@ Chatify's backend is powered by **Node.js, Express, and MongoDB**, with addition
 #### 📌 Features
 - 🔑 **JWT Authentication** (Login, Signup)
 - 🔒 **Secure Password Hashing** using Bcrypt
-- 🗃️ **MongoDB Database** for user and message storage
+- 🎃 **MongoDB Database** for user and message storage
 - 🛡️ **CORS Enabled** for frontend-backend communication
 - 📄 **RESTful API Endpoints**
 - ☁️ **Cloudinary Integration** for media storage
@@ -31,6 +31,7 @@ Chatify's backend is powered by **Node.js, Express, and MongoDB**, with addition
 | **Dotenv** | Manage environment variables |
 | **Cloudinary** | Cloud storage for image and file uploads |
 | **Multer** | Middleware for handling file uploads |
+| **Toastify** | Notification system for user feedback |
 
 ---
 
@@ -42,8 +43,9 @@ Chatify's frontend is built with **React, Tailwind CSS, and Redux Toolkit**, ens
 - 🛠️ **Redux Toolkit** for global state management
 - 🌑 **Dark Mode Support**
 - 🔑 **Authentication with JWT** (Login, Signup)
-- 📤 **Profile Picture Upload** with Cloudinary
+- 📄 **Profile Picture Upload** with Cloudinary
 - 💬 **Chat Interface** for real-time messaging
+- 📢 **Toast Notifications** for user feedback
 
 #### 🚀 Technologies Used
 | Technology | Description |
@@ -52,6 +54,7 @@ Chatify's frontend is built with **React, Tailwind CSS, and Redux Toolkit**, ens
 | **Tailwind CSS** | Utility-first CSS framework for styling |
 | **Redux Toolkit** | State management for React applications |
 | **React Router** | Navigation and routing in React |
+| **Toastify** | Notification system for user feedback |
 
 ---
 
