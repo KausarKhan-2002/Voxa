@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { authInputs } from "../../utils/authInputs";
 import { useNavigate } from "react-router-dom";
-import {useDispatch} from "react-redux"
-import {setUser} from "../../Store/userSlice"
+import { useDispatch } from "react-redux";
+import { setUser } from "../../Store/userSlice";
+import { notification } from "../../utils/notification";
+import { handleThrottling } from "../../utils/handleThrottling";
 
 const AuthForm = () => {
   const [isRegistering, setIsRegistering] = useState(false);
@@ -14,13 +16,19 @@ const AuthForm = () => {
     phoneNumber: "",
   });
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
 
   const fetchData = async () => {
+    notification(
+      "info",
+      isRegistering ? "Creating your account" : "Recognizing you ...",
+      true
+    );
+
     try {
       const API = isRegistering
         ? "http://localhost:7000/user/signup"
@@ -32,9 +40,13 @@ const AuthForm = () => {
         body: JSON.stringify(userInput),
         credentials: isRegistering ? "omit" : "include",
       });
-      
 
       const json = await res.json();
+
+      if (!json.success) {
+        notification("warning", json.message);
+        return;
+      }
 
       // Reset form after submission
       setUserInput({
@@ -45,26 +57,31 @@ const AuthForm = () => {
         phoneNumber: "",
       });
 
-      setIsRegistering(false);
       !isRegistering && navigate("/editprofile");
+      setIsRegistering(false);
 
-      if (!json.success) {
-        throw new Error(json.message)
-      }
-
-      alert(json.message)
-      !isRegistering && dispatch(setUser(json.user))
-
+      notification("success", json.message);
+      !isRegistering && dispatch(setUser(json.user));
     } catch (error) {
       console.error("Error fetching data:", error.message);
+      notification("error", "Internal server error!");
     }
   };
 
   const handleFormSubmit = () => {
     console.log(userInput);
 
+    if (isRegistering) {
+      if (userInput.password !== userInput.confirmPassword) {
+        notification("warn", "Password and confirm password do not match");
+        return;
+      }
+    }
+
     fetchData();
   };
+
+  const throttle = handleThrottling(handleFormSubmit, 2000);
 
   const fieldSets = {
     register: ["name", "email", "password", "confirmPassword", "phoneNumber"],
@@ -102,7 +119,7 @@ const AuthForm = () => {
 
           <button
             type="button"
-            onClick={handleFormSubmit}
+            onClick={throttle}
             className="w-full p-3 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-500 transition"
           >
             {isRegistering ? "Sign Up" : "Login"}

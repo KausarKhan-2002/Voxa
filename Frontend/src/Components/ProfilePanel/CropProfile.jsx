@@ -1,6 +1,7 @@
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { useRef } from "react";
+import { notification } from "../../utils/notification";
 
 const CropProfile = ({ selectProfile, setShowCropModel, setCroppedImage }) => {
   const cropperRef = useRef(null);
@@ -22,9 +23,10 @@ const CropProfile = ({ selectProfile, setShowCropModel, setCroppedImage }) => {
         return;
       }
 
-    //   const imageUrl = URL.createObjectURL(blob); // Convert Blob to URL
-      setCroppedImage(blob) // Save URL instead of Blob
+      //   const imageUrl = URL.createObjectURL(blob); // Convert Blob to URL
+      setCroppedImage(blob); // Save URL instead of Blob
       setShowCropModel(false); // Hide Cropper
+      notification("success", "Profile set successfully!");
     }, "image/jpeg");
   };
 

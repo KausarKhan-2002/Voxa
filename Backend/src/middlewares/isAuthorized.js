@@ -12,7 +12,7 @@ const isAuthorized = async (req, res, next) => {
     if (!jwtToken) {
       return res
         .status(401)
-        .json({ message: "Unauthorized: No token provided, Please login" });
+        .json({success: false, message: "Unauthorized: No token provided, Please login" });
     }
 
     // Verify the JWT token

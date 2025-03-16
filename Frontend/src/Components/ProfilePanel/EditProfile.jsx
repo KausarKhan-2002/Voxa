@@ -1,21 +1,29 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaPen } from "react-icons/fa";
 import { DEFAULT_PROFILE } from "../../utils/LINK";
 import CropProfile from "./CropProfile";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../Store/userSlice";
+import { notification } from "../../utils/notification";
+import { useNavigate } from "react-router-dom";
+import { handleThrottling } from "../../utils/handleThrottling";
 
 const EditProfile = () => {
-  const [profileDescription, setProfileDescription] = useState(
-    "Hii there, I am using Chatify..."
-  );
+  const defaultDes = "Hii there, I am using Chatify...";
+  const user = useSelector((store) => store.userInfo);
+  const [profileDescription, setProfileDescription] = useState(defaultDes);
   const [isReadOnly, setIsReadOnly] = useState(true);
   const [profileImage, setProfileImage] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
   const [isCropModalVisible, setIsCropModalVisible] = useState(false);
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
-  const user = useSelector((store) => store.userInfo);
-  console.log("user", user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setProfileDescription(user.description || defaultDes);
+  }, [user]);
 
   const handleFileInput = () => {
     fileInputRef.current.click();
@@ -33,9 +41,11 @@ const EditProfile = () => {
 
   const handleUploadProfile = async () => {
     if (!croppedImage) {
-      alert("Please crop an image first");
+      notification("warn", "Please crop an image first");
       return;
     }
+
+    notification("info", "Profile uplading...", true);
 
     const formData = new FormData();
     formData.append("profileImage", croppedImage); // ✅ Send only cropped image
@@ -48,14 +58,44 @@ const EditProfile = () => {
         credentials: "include",
       });
       const json = await res.json();
+      if (!json.success) {
+        notification("warn", json.message);
+        return;
+      }
+
+      dispatch(setUser(json.user));
+      notification("success", json.message);
       console.log(json);
     } catch (err) {
       console.log(err);
     }
   };
+  
 
-  console.log("userProfile", user.profilePicture);
-  console.log("croppedImage", croppedImage);
+  const handleNext = async () => {
+    try {
+      const res = await fetch("http://localhost:7000/user/update-user", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ description: profileDescription }),
+        credentials: "include",
+      });
+      const json = await res.json();
+
+      if (!json.success) {
+        notification("warn", json.message);
+        return;
+      }
+
+      notification("success", json.message);
+      dispatch(setUser(json.user));
+      navigate("/chats");
+    } catch (err) {
+      console.log("Error:", err.message);
+    }
+  };
+
+  const throttleForNext = handleThrottling(handleNext, 2000)
 
   return (
     <section className="bg-slate-900 w-full h-[94vh] flex flex-col items-center justify-center px-5">
@@ -65,10 +105,11 @@ const EditProfile = () => {
           <img
             className="w-32 h-32 object-cover bg-slate-700 rounded-full border-4 border-gray-700 shadow-md"
             src={
-              user.profilePicture ||
-              (croppedImage
+              croppedImage
                 ? URL.createObjectURL(croppedImage)
-                : DEFAULT_PROFILE)
+                : user.profilePicture
+                ? user.profilePicture
+                : DEFAULT_PROFILE
             }
           />
           <button
@@ -122,7 +163,10 @@ const EditProfile = () => {
           {/* <button className="w-24 py-2 bg-gray-700 text-white rounded-md shadow-md hover:bg-gray-600 transition">
             Skip
           </button> */}
-          <button className="w-24 py-2 bg-green-700 text-white rounded-md shadow-md hover:bg-green-600 transition cursor-pointer">
+          <button
+            onClick={throttleForNext}
+            className="w-24 py-2 bg-green-700 text-white rounded-md shadow-md hover:bg-green-600 transition cursor-pointer"
+          >
             Next
           </button>
         </div>

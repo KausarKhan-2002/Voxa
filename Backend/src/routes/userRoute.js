@@ -5,6 +5,7 @@ const {
   logout,
   updateProfilePicture,
   updateUserInformation,
+  checkAuthorization,
 } = require("../controllers/userController");
 const isAuthorized = require("../middlewares/isAuthorized");
 const route = express.Router();
@@ -22,6 +23,7 @@ route.patch(
   upload.single("profileImage"),
   updateProfilePicture
 );
+route.get("/authorized", isAuthorized, checkAuthorization)
 route.patch("/update-user", isAuthorized, updateUserInformation);
 
 module.exports = route;

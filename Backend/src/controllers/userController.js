@@ -141,14 +141,14 @@ exports.updateProfilePicture = async (req, res) => {
         message: "You are not athorized, please login",
       });
 
-    res.json({ message: "Profile updated", user: findUser });
+    res.json({ success: true, message: "Profile updated successfully!", user: findUser });
   } catch (err) {
     console.error("Error updating profile image:", err);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({success: false, messsage: "Internal Server Error" });
   }
 };
 
-exports.getProfileDetails = (req, res) => {
+exports.checkAuthorization = (req, res) => {
   try {
     const user = req.user;
 
@@ -170,6 +170,8 @@ exports.getProfileDetails = (req, res) => {
 exports.updateUserInformation = async (req, res) => {
   try {
     const { name, description } = req.body;
+    console.log("name:", name);
+    console.log("description: ", description);
 
     // Check If there is not valid updated data
     if (!name && !description) {
