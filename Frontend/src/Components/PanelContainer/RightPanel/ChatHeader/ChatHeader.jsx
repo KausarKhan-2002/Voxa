@@ -13,7 +13,10 @@ const ChatHeader = () => {
         to={"/userprofile"}
         className="flex-1 py-2 cursor-pointer flex items-center gap-3 active:bg-slate-800"
       >
+      <div className={`avatar avatar-${user.status == "online" && "online"} w-11`}>
         <img className="w-11 h-11 rounded-full" src={user.image} alt="" />
+
+      </div>
         <div>
           <h3 className="font-medium">{user?.name}</h3>
           <p className="text-xs text-slate-300 mt-[2px]">{user.status}</p>

@@ -22,7 +22,9 @@ const ChatListItem = ({ users }) => {
             active == user.id && "bg-slate-900"
           } relative flex justify-between items-center gap-3 px-3 cursor-pointer border-t-[1px] py-3 border-slate-700 hover:bg-slate-900`}
         >
-          <div>
+          <div
+            className={`avatar avatar-${user.status === "online" && "online"} w-14`}
+          >
             <img
               className="w-12 h-12 object-cover rounded-full"
               src={user.image}

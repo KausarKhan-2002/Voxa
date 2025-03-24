@@ -13,7 +13,7 @@ const RightLayout = () => {
   return (
     <div className="flex flex-col w-[65%] bg-slate-900">
       <ChatHeader />
-      <div className="flex-1">
+      <div className="h-[75vh] overflow-y-auto scrollbar-hid">
         <MessageList />
       </div>
       <MessageInput />
