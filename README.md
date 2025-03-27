@@ -1,4 +1,4 @@
-# 🚀 Chatify
+# 🚀 Voxa
 
 Chatify is a **real-time chat application** built with the **MERN stack**, designed for seamless messaging, secure authentication, and media handling.
 
